@@ -1,17 +1,38 @@
+// app/posts/page.tsx
 import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
+// Define type untuk Post dengan User
+type PostWithUser = {
+  id: number
+  title: string
+  content: string
+  createdAt: Date
+  updatedAt: Date | null
+  userId: number | null
+  user: {
+    id: number
+    name: string
+    email: string
+  } | null
+}
+
 export default async function PostsPage() {
-  // Ambil data posts dari database termasuk data user
-  const posts = await prisma.post.findMany({
-    include: {
-      user: true
-    },
-    orderBy: {
-      createdAt: 'desc'
-    }
-  })
+  let posts: PostWithUser[] = []
+  
+  try {
+    posts = await prisma.post.findMany({
+      include: {
+        user: true
+      },
+      orderBy: {
+        createdAt: 'desc'
+      }
+    }) as PostWithUser[]
+  } catch (error) {
+    console.log('Database error:', error)
+  }
 
   return (
     <div style={{ padding: '20px', maxWidth: '800px', margin: '0 auto' }}>
@@ -25,7 +46,7 @@ export default async function PostsPage() {
         </p>
       ) : (
         <div style={{ marginTop: '20px' }}>
-          {posts.map((post) => (
+          {posts.map((post: PostWithUser) => (
             <div 
               key={post.id} 
               style={{ 
