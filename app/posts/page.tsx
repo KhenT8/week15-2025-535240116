@@ -22,16 +22,16 @@ export default async function PostsPage() {
       {
         id: 1,
         title: "Contoh Post 1",
-        content: "Ini adalah contoh post untuk deployment",
+        content: "Contoh Konten dari Post 1",
         createdAt: new Date(),
-        user: { name: "Admin" }
+        user: { name: "KhenT8" }
       },
       {
         id: 2, 
         title: "Contoh Post 2",
-        content: "Database mungkin tidak tersedia di production",
+        content: "Contoh Konten dari Post 2",
         createdAt: new Date(),
-        user: { name: "System" }
+        user: { name: "HopKick123" }
       }
     ]
   }
